@@ -1,0 +1,59 @@
+paths:
+  data_dir: "./data"
+  results_dir: "./results"
+  logs_dir: "./logs"
+
+model:
+  name: "community_gnn"
+  hidden_dim: 128
+  num_layers: 2
+  output_dim: 50
+  dropout: 0.5
+
+community_gnn:
+  layer_spec: [128, 128]
+  max_communities: 50
+  dropout: 0.5
+
+
+positional_encoding:
+  name: "rfp_gnn"
+  num_layers: 4
+  num_batches: 6
+  batch_aggregation: "mean"
+  initial_dim: 32
+  embed_dim: 128
+  seed: 42
+
+dataset:
+  name: "email-Eu-core"
+  directed: true
+  labels: true
+
+training:
+  epochs: 10000
+  batch_size: 1
+  learning_rate: 0.0005
+  weight_decay: 0
+  optimizer: "adam"
+  early_stopping:
+    patience: 100
+    delta: 0.005
+  dynamic_LR:
+    factor: 0.5
+    patience: 50
+    min_lr: 0.0001
+
+
+evaluation:
+  metrics:
+    - "AMI"
+    - "n_communities"
+    - "code_length"
+
+logging:
+  level: "info"
+  log_to_file: true
+  log_file: "./logs/train.log"
+
+seed: 148
